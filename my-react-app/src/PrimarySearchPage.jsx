@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { accounts } from './data';
+import { FaSortUp, FaSortDown } from 'react-icons/fa';
 
 function PrimarySearchPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -41,28 +42,42 @@ function PrimarySearchPage() {
   return (
     <div className="bg-white p-6 rounded shadow">
       <h1 className="text-2xl font-bold mb-4">Accounts</h1>
-      <table className="w-full border-collapse border rounded shadow">
-        <thead className="bg-gray-200">
+      <table className="w-full border-collapse border border-gray-300 rounded shadow">
+        <thead className="bg-gray-100 text-left">
           <tr>
-            <th className="p-2 border cursor-pointer" onClick={() => requestSort('accountNumber')}>Account Number ⬆⬇ <input type="text" onChange={handleSearch} className="w-full p-1 border rounded"/></th>
-            <th className="p-2 border cursor-pointer" onClick={() => requestSort('companyName')}>Company ⬆⬇ <input type="text" onChange={handleSearch} className="w-full p-1 border rounded"/></th>
-            <th className="p-2 border cursor-pointer" onClick={() => requestSort('contactName')}>Contact ⬆⬇ <input type="text" onChange={handleSearch} className="w-full p-1 border rounded"/></th>
-            <th className="p-2 border cursor-pointer" onClick={() => requestSort('phoneNumber')}>Phone Number ⬆⬇ <input type="text" onChange={handleSearch} className="w-full p-1 border rounded"/></th>
-            <th className="p-2 border cursor-pointer" onClick={() => requestSort('email')}>Email ⬆⬇ <input type="text" onChange={handleSearch} className="w-full p-1 border rounded"/></th>
-            <th className="p-2 border cursor-pointer" onClick={() => requestSort('accountStatus')}>Status ⬆⬇</th>
-            <th className="p-2 border cursor-pointer" onClick={() => requestSort('virtualCompany')}>Virtual Company ⬆⬇</th>
+            {["accountNumber", "companyName", "contactName", "phoneNumber", "email", "accountStatus", "virtualCompany"].map(column => (
+              <th key={column} className="p-2 border border-gray-300 cursor-pointer text-gray-700">
+                <div className="flex items-center space-x-1" onClick={() => requestSort(column)}>
+                  <span className="font-semibold">{column.replace(/([A-Z])/g, " $1").trim()}</span>
+                  {sortConfig.key === column ? (
+                    sortConfig.direction === "ascending" ? <FaSortUp /> : <FaSortDown />
+                  ) : (
+                    <div className="flex flex-col">
+                      <FaSortUp className="text-gray-400" />
+                      <FaSortDown className="text-gray-400" />
+                    </div>
+                  )}
+                </div>
+                <input 
+                  type="text" 
+                  onChange={handleSearch} 
+                  placeholder="Search" 
+                  className="w-full p-1 border border-gray-300 rounded bg-gray-50 text-gray-600 mt-1"
+                />
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
           {filteredResults.map(account => (
-            <tr key={account.accountNumber} className="border">
-              <td className="p-2 border">{account.accountNumber}</td>
-              <td className="p-2 border">{account.companyName}</td>
-              <td className="p-2 border">{account.contactName}</td>
-              <td className="p-2 border">{account.phoneNumber}</td>
-              <td className="p-2 border">{account.email}</td>
-              <td className="p-2 border">{account.accountStatus}</td>
-              <td className="p-2 border">{account.virtualCompany}</td>
+            <tr key={account.accountNumber} className="border border-gray-300">
+              <td className="p-2 border border-gray-300">{account.accountNumber}</td>
+              <td className="p-2 border border-gray-300">{account.companyName}</td>
+              <td className="p-2 border border-gray-300">{account.contactName}</td>
+              <td className="p-2 border border-gray-300">{account.phoneNumber}</td>
+              <td className="p-2 border border-gray-300">{account.email}</td>
+              <td className="p-2 border border-gray-300">{account.accountStatus}</td>
+              <td className="p-2 border border-gray-300">{account.virtualCompany}</td>
             </tr>
           ))}
         </tbody>
