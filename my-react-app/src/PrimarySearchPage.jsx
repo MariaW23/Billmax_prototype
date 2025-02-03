@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { accounts } from './data';
-import { FaSortUp, FaSortDown, FaSearch, FaFilter } from 'react-icons/fa';
+import { FaSortUp, FaSortDown, FaSearch, FaFilter, FaAngleDoubleLeft } from 'react-icons/fa';
 import './PrimarySearchPage.css';
 
 function PrimarySearchPage() {
@@ -8,7 +8,7 @@ function PrimarySearchPage() {
   const [filteredResults, setFilteredResults] = useState(accounts);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
-  const [filters, setFilters] = useState({ status: '', date: '', keyword: '' });
+  const [filters, setFilters] = useState({ status: [], date: '', keyword: '' });
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -42,10 +42,24 @@ function PrimarySearchPage() {
     setFilteredResults(sortedData);
   };
 
+  const toggleStatusFilter = (value) => {
+    setFilters(prevFilters => {
+      const newStatus = prevFilters.status.includes(value)
+        ? prevFilters.status.filter(s => s !== value)
+        : [...prevFilters.status, value];
+      return { ...prevFilters, status: newStatus };
+    });
+  };
+
+  const clearFilters = () => {
+    setFilters({ status: [], date: '', keyword: '' });
+    setFilteredResults(accounts);
+  };
+
   const applyFilters = () => {
     let results = accounts;
-    if (filters.status) {
-      results = results.filter(account => account.accountStatus.toLowerCase() === filters.status.toLowerCase());
+    if (filters.status.length > 0) {
+      results = results.filter(account => filters.status.includes(account.accountStatus.toLowerCase()));
     }
     if (filters.date) {
       results = results.filter(account => account.creationDate === filters.date);
@@ -62,38 +76,39 @@ function PrimarySearchPage() {
   return (
     <div className="primary-search-container">
       <h1 className="title">Accounts</h1>
-      <button onClick={() => setIsFilterPanelOpen(!isFilterPanelOpen)} className="filter-button">
+      <button onClick={() => setIsFilterPanelOpen(true)} className="filter-button">
         <FaFilter /> Filters
       </button>
-      {isFilterPanelOpen && (
-        <div className="filter-panel">
-          <button onClick={() => setIsFilterPanelOpen(false)} className="close-button">&times;</button>
-          <h2 className="filter-title">Filters</h2>
-          <div className="filter-section">
-            <label>Status</label>
-            <select name="status" onChange={(e) => setFilters({ ...filters, status: e.target.value })}>
-              <option value="">All</option>
-              <option value="open">Open</option>
-              <option value="closed">Closed</option>
-              <option value="collections">Collections</option>
-              <option value="suspended">Suspended</option>
-            </select>
+      <div className={`filter-panel ${isFilterPanelOpen ? 'open' : ''}`}>
+        <button onClick={() => setIsFilterPanelOpen(false)} className="close-button">
+          <FaAngleDoubleLeft />
+        </button>
+        <h2 className="filter-title">Filters</h2>
+        <button onClick={clearFilters} className="clear-filters">Clear All</button>
+        <div className="filter-section">
+          <label>Status</label>
+          <div className="checkbox-group">
+            {['open', 'closed', 'collections', 'suspended'].map(status => (
+              <label key={status}>
+                <input type="checkbox" checked={filters.status.includes(status)} onChange={() => toggleStatusFilter(status)} /> {status.charAt(0).toUpperCase() + status.slice(1)}
+              </label>
+            ))}
           </div>
-          <div className="filter-section">
-            <label>Date Created</label>
-            <input type="date" onChange={(e) => setFilters({ ...filters, date: e.target.value })} />
-          </div>
-          <div className="filter-section">
-            <label>Keyword</label>
-            <input type="text" placeholder="Search company or contact..." onChange={(e) => setFilters({ ...filters, keyword: e.target.value })} />
-          </div>
-          <button onClick={applyFilters} className="apply-filters">Apply Filters</button>
         </div>
-      )}
+        <div className="filter-section">
+          <label>Date Created</label>
+          <input type="date" value={filters.date} onChange={(e) => setFilters({ ...filters, date: e.target.value })} />
+        </div>
+        <div className="filter-section">
+          <label>Keyword</label>
+          <input type="text" placeholder="Search company or contact..." value={filters.keyword} onChange={(e) => setFilters({ ...filters, keyword: e.target.value })} />
+        </div>
+        <button onClick={applyFilters} className="apply-filters">Apply Filters</button>
+      </div>
       <table className="search-table">
         <thead>
           <tr>
-            {["accountNumber", "companyName", "contactName", "phoneNumber", "email", "accountStatus", "virtualCompany"].map(column => (
+            {["accountNumber", "companyName", "contactName", "phoneNumber", "email", "accountStatus", "creationDate", "virtualCompany"].map(column => (
               <th key={column} className="sortable-header" onClick={() => requestSort(column)}>
                 <div className="header-content">
                   <span className="header-text">{column.replace(/([A-Z])/g, " $1").trim()}</span>
@@ -125,6 +140,7 @@ function PrimarySearchPage() {
               <td>{account.phoneNumber}</td>
               <td>{account.email}</td>
               <td>{account.accountStatus}</td>
+              <td>{account.creationDate}</td>
               <td>{account.virtualCompany}</td>
             </tr>
           ))}
