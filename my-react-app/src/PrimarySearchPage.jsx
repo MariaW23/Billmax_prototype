@@ -33,7 +33,7 @@ function PrimarySearchPage() {
   const requestSort = (key) => {
     let direction = 'ascending';
     
-    // if the column is already in ascending order, switch to descedning order; else defaults to ascending
+    // if the column is already in ascending order, switch to descending order; else defaults to ascending
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
       direction = 'descending';
     }
@@ -102,6 +102,7 @@ function PrimarySearchPage() {
         </div>
       </div>
 
+      {/* Toggle css classes and styling based on current react properties */}
       <button onClick={() => setIsFilterPanelOpen(!isFilterPanelOpen)} className="filter-toggle-button blue-button">
         <FaAngleDoubleLeft className={isFilterPanelOpen ? 'rotate-icon' : ''} />
       </button>
@@ -112,7 +113,9 @@ function PrimarySearchPage() {
           <label>Status</label>
           <div className="checkbox-group">
             {['open', 'closed', 'collections', 'suspended'].map(status => (
+              // assign the unique key based on status name
               <label key={status}>
+                {/* format the text to have capital letters*/}
                 <input type="checkbox" checked={filters.status.includes(status)} onChange={() => toggleStatusFilter(status)} /> {status.charAt(0).toUpperCase() + status.slice(1)}
               </label>
             ))}
@@ -120,11 +123,11 @@ function PrimarySearchPage() {
         </div>
         <div className="filter-section">
           <label>Date Created</label>
-          <input type="date" value={filters.date} onChange={(e) => setFilters({ ...filters, date: e.target.value })} />
+          <input className="search-box-container" type="date" value={filters.date} onChange={(e) => setFilters({ ...filters, date: e.target.value })} />
         </div>
         <div className="filter-section">
           <label>Keyword</label>
-          <input type="text" placeholder="Search company or contact..." value={filters.keyword} onChange={(e) => setFilters({ ...filters, keyword: e.target.value })} />
+          <input className="search-box-container" type="text" placeholder="Search keywords..." value={filters.keyword} onChange={(e) => setFilters({ ...filters, keyword: e.target.value })} />
         </div>
         <button onClick={applyFilters} className="apply-filters blue-button">Apply Filters</button>
       </div>
@@ -132,9 +135,11 @@ function PrimarySearchPage() {
       <table className="search-table">
         <thead>
           <tr>
+            {/* use dynamic mapping to apply same styling to each column & reduce redundant code */}
             {['accountNumber', 'companyName', 'contactName', 'phoneNumber', 'email', 'accountStatus', 'creationDate', 'virtualCompany'].map(column => (
               <th key={column} className="sortable-header">
                 <div className="header-content">
+                  {/* RegEx function that looks for any uppercase letter A-Z and then insert a space before the matched letter using $1 (captures what's matched within A-Z) */}
                   <span className="header-text">{column.replace(/([A-Z])/g, ' $1').trim()}</span>
                   <button className="sort-button" onClick={() => requestSort(column)}>
                     {sortConfig.key === column ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSortUp />}
