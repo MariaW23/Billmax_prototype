@@ -40,20 +40,28 @@ function PrimarySearchPage() {
     setFilteredResults(sortedData);
   };
 
+  const columnNames = {
+    accountNumber: "Account Number",
+    companyName: "Company Name",
+    contactName: "Contact Name",
+    phoneNumber: "Phone Number",
+    email: "Email",
+    accountStatus: "Account Status",
+    virtualCompany: "Virtual Company"
+  };
+
   return (
     <div className="primary-search-container">
       <h1 className="title">Accounts</h1>
       <table className="search-table">
         <thead>
           <tr>
-            {["accountNumber", "companyName", "contactName", "phoneNumber", "email", "accountStatus", "virtualCompany"].map(column => (
+            {Object.keys(columnNames).map(column => (
               <th key={column} className="sortable-header" onClick={() => requestSort(column)}>
-                <span className="header-text">{column.replace(/([A-Z])/g, " $1").trim()}</span>
-                {sortConfig.key === column ? (
-                  sortConfig.direction === "ascending" ? <FaSortUp /> : <FaSortDown />
-                ) : (
-                  <FaSortUp className="sort-icon" />
-                )}
+                <div className="header-content">
+                  <span className="header-text">{columnNames[column]}</span>
+                  {sortConfig.key === column ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSortUp className="sort-icon" />}
+                </div>
                 <div className="search-box-container">
                   <input 
                     type="text" 
