@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { accounts } from './data';
 
 // use professional-looking icons from font awesome: https://fontawesome.com/search?q=sort&o=r
-import { FaSortUp, FaSortDown, FaSearch, FaAngleDoubleLeft, FaFilter, FaPlus, FaDownload, FaColumns, FaSave } from 'react-icons/fa';
+import { FaSortUp, FaSortDown, FaSearch, FaAngleDoubleLeft, FaFilter, FaPlus, FaDownload, FaPencilAlt, FaSave } from 'react-icons/fa';
 
 import './PrimarySearchPage.css';
 
@@ -93,7 +93,7 @@ function PrimarySearchPage() {
       <div className="button-container">
         <div className="left-buttons">
           <button className="new-account-button blue-button"><FaPlus /> New Account</button>
-          <button className="edit-columns-button"><FaColumns /> Edit Columns</button>
+          <button className="edit-columns-button"><FaPencilAlt /> Edit Columns</button>
         </div>
         <div className="right-buttons">
           <button className="export-button"><FaDownload /> Export</button>
