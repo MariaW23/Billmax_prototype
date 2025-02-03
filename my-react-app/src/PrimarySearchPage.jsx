@@ -49,23 +49,28 @@ function PrimarySearchPage() {
     setFilteredResults(sortedData);
   };
 
-  
+  // update and track the more advanced filters
   const toggleStatusFilter = (value) => {
     setFilters(prevFilters => {
       const newStatus = prevFilters.status.includes(value)
+      // since in a checkbox format, will filter out the value given if it existed in prevFilters
         ? prevFilters.status.filter(s => s !== value)
+        // if wasn't in prevFilters, then add it in whilst keeping other elements intact
         : [...prevFilters.status, value];
       return { ...prevFilters, status: newStatus };
     });
   };
 
+  // reset to default state of no filters
   const clearFilters = () => {
     setFilters({ status: [], date: '', keyword: '' });
     setFilteredResults(accounts);
   };
 
+  // actually apply the different filters that has been selected
   const applyFilters = () => {
     let results = accounts;
+    // check if any of the checkboxes has been selected for status
     if (filters.status.length > 0) {
       results = results.filter(account => filters.status.includes(account.accountStatus.toLowerCase()));
     }
@@ -87,7 +92,7 @@ function PrimarySearchPage() {
 
       <div className="button-container">
         <div className="left-buttons">
-          <button className="new-account-button"><FaPlus /> New Account</button>
+          <button className="new-account-button blue-button"><FaPlus /> New Account</button>
           <button className="edit-columns-button"><FaColumns /> Edit Columns</button>
         </div>
         <div className="right-buttons">
@@ -97,7 +102,7 @@ function PrimarySearchPage() {
         </div>
       </div>
 
-      <button onClick={() => setIsFilterPanelOpen(!isFilterPanelOpen)} className="filter-toggle-button">
+      <button onClick={() => setIsFilterPanelOpen(!isFilterPanelOpen)} className="filter-toggle-button blue-button">
         <FaAngleDoubleLeft className={isFilterPanelOpen ? 'rotate-icon' : ''} />
       </button>
       <div className={`filter-panel ${isFilterPanelOpen ? 'open' : ''}`} style={{ right: isFilterPanelOpen ? '0' : '-100%' }}>
@@ -121,7 +126,7 @@ function PrimarySearchPage() {
           <label>Keyword</label>
           <input type="text" placeholder="Search company or contact..." value={filters.keyword} onChange={(e) => setFilters({ ...filters, keyword: e.target.value })} />
         </div>
-        <button onClick={applyFilters} className="apply-filters">Apply Filters</button>
+        <button onClick={applyFilters} className="apply-filters blue-button">Apply Filters</button>
       </div>
 
       <table className="search-table">

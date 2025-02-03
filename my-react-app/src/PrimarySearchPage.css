@@ -118,8 +118,6 @@
     position: fixed;
     top: 20px;
     right: 0;
-    background: #007bff;
-    color: white;
     border: none;
     padding: 10px;
     border-radius: 5px 0 0 5px;
@@ -163,8 +161,6 @@
   
   /* Apply Filters Button */
   .apply-filters {
-    background: #007bff;
-    color: white;
     border: none;
     padding: 10px;
     width: 100%;
@@ -187,6 +183,11 @@
   .right-buttons {
     display: flex;
     gap: 10px;
+  }
+
+  .blue-button {
+    background: #007bff;
+    color: white;
   }
   
   
