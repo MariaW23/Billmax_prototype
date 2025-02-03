@@ -171,4 +171,22 @@
     border-radius: 5px;
     cursor: pointer;
   }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .left-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .right-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
   

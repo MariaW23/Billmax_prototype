@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { accounts } from './data';
-import { FaSortUp, FaSortDown, FaSearch, FaAngleDoubleLeft } from 'react-icons/fa';
+import { FaSortUp, FaSortDown, FaSearch, FaAngleDoubleLeft, FaFilter, FaPlus, FaDownload, FaColumns, FaSave } from 'react-icons/fa';
 import './PrimarySearchPage.css';
 
 function PrimarySearchPage() {
@@ -26,17 +26,10 @@ function PrimarySearchPage() {
       direction = 'descending';
     }
     setSortConfig({ key, direction });
-    sortData(key, direction);
-  };
 
-  const sortData = (key, direction) => {
     const sortedData = [...filteredResults].sort((a, b) => {
-      if (a[key] < b[key]) {
-        return direction === 'ascending' ? -1 : 1;
-      }
-      if (a[key] > b[key]) {
-        return direction === 'ascending' ? 1 : -1;
-      }
+      if (a[key] < b[key]) return direction === 'ascending' ? -1 : 1;
+      if (a[key] > b[key]) return direction === 'ascending' ? 1 : -1;
       return 0;
     });
     setFilteredResults(sortedData);
@@ -76,6 +69,19 @@ function PrimarySearchPage() {
   return (
     <div className="primary-search-container">
       <h1 className="title">Accounts</h1>
+
+      <div className="button-container">
+        <div className="left-buttons">
+          <button className="new-account-button"><FaPlus /> New Account</button>
+          <button className="edit-columns-button"><FaColumns /> Edit Columns</button>
+        </div>
+        <div className="right-buttons">
+          <button className="export-button"><FaDownload /> Export</button>
+          <button className="save-options-button"><FaSave /> Save Options</button>
+          <button onClick={() => setIsFilterPanelOpen(!isFilterPanelOpen)} className="filter-button"><FaFilter /> Filters</button>
+        </div>
+      </div>
+
       <button onClick={() => setIsFilterPanelOpen(!isFilterPanelOpen)} className="filter-toggle-button">
         <FaAngleDoubleLeft className={isFilterPanelOpen ? 'rotate-icon' : ''} />
       </button>
@@ -102,18 +108,17 @@ function PrimarySearchPage() {
         </div>
         <button onClick={applyFilters} className="apply-filters">Apply Filters</button>
       </div>
+
       <table className="search-table">
         <thead>
           <tr>
             {['accountNumber', 'companyName', 'contactName', 'phoneNumber', 'email', 'accountStatus', 'creationDate', 'virtualCompany'].map(column => (
-              <th key={column} className="sortable-header" onClick={() => requestSort(column)}>
+              <th key={column} className="sortable-header">
                 <div className="header-content">
                   <span className="header-text">{column.replace(/([A-Z])/g, ' $1').trim()}</span>
-                  {sortConfig.key === column ? (
-                    sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />
-                  ) : (
-                    <FaSortUp className="sort-icon" />
-                  )}
+                  <button className="sort-button" onClick={() => requestSort(column)}>
+                    {sortConfig.key === column ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSortUp />}
+                  </button>
                 </div>
                 {column === 'accountStatus' ? (
                   <select onChange={handleSearch} className="status-dropdown">
