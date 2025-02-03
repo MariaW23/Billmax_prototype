@@ -52,10 +52,7 @@ function PrimarySearchPage() {
                   {sortConfig.key === column ? (
                     sortConfig.direction === "ascending" ? <FaSortUp /> : <FaSortDown />
                   ) : (
-                    <div className="flex flex-col">
-                      <FaSortUp className="text-gray-400" />
-                      <FaSortDown className="text-gray-400" />
-                    </div>
+                    <FaSortUp className="text-gray-400" />
                   )}
                 </div>
                 <input 
