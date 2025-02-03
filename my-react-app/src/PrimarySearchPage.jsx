@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
 import { accounts } from './data';
+
+// use professional-looking icons from font awesome: https://fontawesome.com/search?q=sort&o=r
 import { FaSortUp, FaSortDown, FaSearch, FaAngleDoubleLeft, FaFilter, FaPlus, FaDownload, FaColumns, FaSave } from 'react-icons/fa';
+
 import './PrimarySearchPage.css';
 
 function PrimarySearchPage() {
+  // set the initial default states:
   const [searchTerm, setSearchTerm] = useState('');
+
+  // default is to show all the accounts from data.js
   const [filteredResults, setFilteredResults] = useState(accounts);
+
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
   const [filters, setFilters] = useState({ status: [], date: '', keyword: '' });
 
+  // e as event that triggered this function
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
     const results = accounts.filter((account) =>
+      // converts the individual accounts into string first and then select all the ones with any string that matches target string
       Object.values(account).some(value =>
         value.toString().toLowerCase().includes(e.target.value.toLowerCase())
       )
@@ -20,14 +29,19 @@ function PrimarySearchPage() {
     setFilteredResults(results);
   };
 
+  // key is the column that's being sorted
   const requestSort = (key) => {
     let direction = 'ascending';
+    
+    // if the column is already in ascending order, switch to descedning order; else defaults to ascending
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
       direction = 'descending';
     }
     setSortConfig({ key, direction });
 
+    // use ...filteredResults to create copy of filteredResults so don't modify original array (immutability)
     const sortedData = [...filteredResults].sort((a, b) => {
+      // return -1 if a should be before b, 1 if after, 0 if the same
       if (a[key] < b[key]) return direction === 'ascending' ? -1 : 1;
       if (a[key] > b[key]) return direction === 'ascending' ? 1 : -1;
       return 0;
@@ -35,6 +49,7 @@ function PrimarySearchPage() {
     setFilteredResults(sortedData);
   };
 
+  
   const toggleStatusFilter = (value) => {
     setFilters(prevFilters => {
       const newStatus = prevFilters.status.includes(value)
