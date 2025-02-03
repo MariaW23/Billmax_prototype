@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { accounts } from './data';
-import { FaSortUp, FaSortDown } from 'react-icons/fa';
+import { FaSortUp, FaSortDown, FaSearch } from 'react-icons/fa';
+import './PrimarySearchPage.css';
 
 function PrimarySearchPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -40,41 +41,42 @@ function PrimarySearchPage() {
   };
 
   return (
-    <div className="bg-white p-6 rounded shadow">
-      <h1 className="text-2xl font-bold mb-4">Accounts</h1>
-      <table className="w-full border-collapse border border-gray-300 rounded shadow">
-        <thead className="bg-gray-100 text-left">
+    <div className="primary-search-container">
+      <h1 className="title">Accounts</h1>
+      <table className="search-table">
+        <thead>
           <tr>
             {["accountNumber", "companyName", "contactName", "phoneNumber", "email", "accountStatus", "virtualCompany"].map(column => (
-              <th key={column} className="p-2 border border-gray-300 cursor-pointer text-gray-700">
-                <div className="flex items-center space-x-1" onClick={() => requestSort(column)}>
-                  <span className="font-semibold">{column.replace(/([A-Z])/g, " $1").trim()}</span>
-                  {sortConfig.key === column ? (
-                    sortConfig.direction === "ascending" ? <FaSortUp /> : <FaSortDown />
-                  ) : (
-                    <FaSortUp className="text-gray-400" />
-                  )}
+              <th key={column} className="sortable-header" onClick={() => requestSort(column)}>
+                <span className="header-text">{column.replace(/([A-Z])/g, " $1").trim()}</span>
+                {sortConfig.key === column ? (
+                  sortConfig.direction === "ascending" ? <FaSortUp /> : <FaSortDown />
+                ) : (
+                  <FaSortUp className="sort-icon" />
+                )}
+                <div className="search-box-container">
+                  <input 
+                    type="text" 
+                    onChange={handleSearch} 
+                    placeholder="Search" 
+                    className="search-box"
+                  />
+                  <FaSearch className="search-icon" />
                 </div>
-                <input 
-                  type="text" 
-                  onChange={handleSearch} 
-                  placeholder="Search" 
-                  className="w-full p-1 border border-gray-300 rounded bg-gray-50 text-gray-600 mt-1"
-                />
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
           {filteredResults.map(account => (
-            <tr key={account.accountNumber} className="border border-gray-300">
-              <td className="p-2 border border-gray-300">{account.accountNumber}</td>
-              <td className="p-2 border border-gray-300">{account.companyName}</td>
-              <td className="p-2 border border-gray-300">{account.contactName}</td>
-              <td className="p-2 border border-gray-300">{account.phoneNumber}</td>
-              <td className="p-2 border border-gray-300">{account.email}</td>
-              <td className="p-2 border border-gray-300">{account.accountStatus}</td>
-              <td className="p-2 border border-gray-300">{account.virtualCompany}</td>
+            <tr key={account.accountNumber}>
+              <td>{account.accountNumber}</td>
+              <td>{account.companyName}</td>
+              <td>{account.contactName}</td>
+              <td>{account.phoneNumber}</td>
+              <td>{account.email}</td>
+              <td>{account.accountStatus}</td>
+              <td>{account.virtualCompany}</td>
             </tr>
           ))}
         </tbody>
