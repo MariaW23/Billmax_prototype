@@ -147,7 +147,6 @@
     padding: 10px;
     width: 100%;
     border-radius: 5px;
-    cursor: pointer;
 }
 
 /* Filter Toggle Button */
@@ -158,7 +157,6 @@
     border: none;
     padding: 10px;
     border-radius: 5px 0 0 5px;
-    cursor: pointer;
     display: flex;
     align-items: center;
     transition: right 0.3s ease-in-out;
@@ -167,6 +165,7 @@
 
 /* Checkbox Styling */
 .checkbox-group label {
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
