@@ -2,53 +2,67 @@
 .primary-search-container {
     padding: 20px;
     max-width: 100%;
-  }
-  
-  /* Table Styling */
-  .search-table {
-    width: 100%;
-    /* share single border instead of having separate borders */
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  
-  .search-table th, 
-  .search-table td {
-    text-align: left;
-    padding: 10px;
-  }
-  
-  .search-table th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-  }
-  
-  .search-table tbody tr {
-    border-bottom: 1px solid #ddd; /* Only horizontal borders */
-  }
-  
-  .search-table th .header-content {
+}
+
+/* Top Buttons (New, Edit, Export, Save, Filter) */
+.button-container {
+    display: flex;
+    /* items distributed evenly but first and last item more to edges */
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.left-buttons, 
+.right-buttons {
+    display: flex;
+    /* put in some space between the buttons */
+    gap: 10px;
+}
+
+/* Common button style */
+.blue-button {
+    background: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-  }
-  
-  .search-table .sortable-header {
-    cursor: pointer;
-  }
-  
-  /* Hide Vertical Borders */
-  .search-table td:not(:last-child), 
-  .search-table th:not(:last-child) {
-    border-right: none;
-  }
-  
-  /* Search Box & Dropdown */
-  .search-box-container, 
-  .status-dropdown {
+}
+
+/* Table Styling */
+.search-table {
+    /* Allows border-radius to work */
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+
+    /* Ensures inner content respects border radius */
+    overflow: hidden;
+}
+
+.search-table th,
+.search-table td {
+    text-align: left;
+    padding: 8px;
+}
+
+.search-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+/* Table Borders & Layout */
+.search-table tbody tr {
+    /* Only horizontal borders */
+    border-bottom: 1px solid #ddd;
+}
+
+/* Search Box & Dropdown */
+.search-box-container, 
+.status-dropdown {
     position: relative;
     display: flex;
     align-items: center;
@@ -57,48 +71,39 @@
     border: 1px solid #ccc;
     padding: 6px 10px;
     width: 100%;
-  }
-  
-  .search-box-container input, 
-  .status-dropdown select {
+}
+
+.search-box-container input, 
+.status-dropdown select {
     border: none;
     background: none;
     outline: none;
     flex-grow: 1;
     font-size: 14px;
     color: #333;
-  }
-  
-  .search-icon {
+}
+
+.search-icon {
     color: #666;
     font-size: 16px;
-  }
-  
-  /* Status Dropdown Styling */
-  .status-dropdown {
-    cursor: pointer;
+}
+
+/* Status Dropdown */
+.status-dropdown {
     padding: 5px;
     width: 100%;
-  }
-  
-  .status-dropdown select {
+}
+
+.status-dropdown select {
     appearance: none;
-    cursor: pointer;
-  }
-  
-  .status-dropdown::after {
-    content: '▼';
-    font-size: 14px;
-    color: #666;
-    position: absolute;
-    right: 10px;
-  }
-  
-  /* Filter Panel */
-  .filter-panel {
+}
+
+/* Filter Panel */
+.filter-panel {
     position: fixed;
     top: 0;
-    right: -400px; /* Moves it further off-screen */
+    /* Hidden by default */
+    right: -100%;
     width: 350px;
     height: 100vh;
     background: white;
@@ -106,44 +111,46 @@
     padding: 20px;
     transition: right 0.4s ease-in-out;
     z-index: 1000;
-    overflow-y: auto; /* Enables scrolling inside the panel */
-  }
-  
-  .filter-panel.open {
-    right: 0;
-  }
+    /* Enables scrolling inside the panel */
+    overflow-y: auto;
+}
 
-  .filter-toggle-button .rotate-icon {
+/* When the panel is open */
+.filter-panel.open {
+    right: 0;
+}
+
+/* Rotate icon when panel opens */
+.filter-toggle-button .rotate-icon {
     transform: rotate(180deg);
     transition: transform 0.3s ease;
-  }
-  
-  .filter-section {
+}
+
+/* Individual filter sections */
+.filter-section {
     margin-bottom: 15px;
-  }
-  
-  /* Clear Filters Button */
-  .clear-filters {
+}
+
+/* "Clear Filters" button */
+.clear-filters {
     display: block;
     background: transparent;
     color: #007bff;
-    border: none;
-    cursor: pointer;
     margin-bottom: 15px;
     font-size: 14px;
     text-decoration: underline;
-  }
-  
-  /* Apply Filters Button */
-  .apply-filters {
+}
+
+/* Apply Filters Button */
+.apply-filters {
     border: none;
     padding: 10px;
     width: 100%;
     border-radius: 5px;
     cursor: pointer;
-  }
+}
 
-/* Toggle Button */
+/* Filter Toggle Button */
 .filter-toggle-button {
     position: fixed;
     top: 20px;
@@ -156,37 +163,13 @@
     align-items: center;
     transition: right 0.3s ease-in-out;
     z-index: 1001;
-  }
-  
-  /* Checkbox Group */
-  .checkbox-group label {
+}
+
+/* Checkbox Styling */
+.checkbox-group label {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 14px;
     margin-top: 5px;
-  }
-
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-  
-  .left-buttons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .right-buttons {
-    display: flex;
-    gap: 10px;
-  }
-
-  .blue-button {
-    background: #007bff;
-    color: white;
-  }
-  
-  
+}

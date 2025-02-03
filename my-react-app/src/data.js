@@ -6,7 +6,7 @@ export const accounts = [
     phoneNumber: "123-456-7890",
     email: "alice@techinnovators.com",
     accountStatus: "Open",
-    creationDate: "2024-02-01",
+    creationDate: "2025-02-01",
     virtualCompany: "Example Company A",
   },
   {
@@ -16,7 +16,7 @@ export const accounts = [
     phoneNumber: "234-567-8901",
     email: "bob@greenenergy.com",
     accountStatus: "Closed",
-    creationDate: "2024-02-01",
+    creationDate: "2025-02-01",
     virtualCompany: "Example Company B",
   },
   {
@@ -26,7 +26,7 @@ export const accounts = [
     phoneNumber: "345-678-9012",
     email: "carol@healthplus.com",
     accountStatus: "Collections",
-    creationDate: "2024-01-25",
+    creationDate: "2025-01-25",
     virtualCompany: "Example Company C",
   },
   {
@@ -36,7 +36,7 @@ export const accounts = [
     phoneNumber: "456-789-0123",
     email: "david@edutech.com",
     accountStatus: "Suspended",
-    creationDate: "2024-01-15",
+    creationDate: "2025-01-15",
     virtualCompany: "Example Company D",
   },
   {
@@ -46,7 +46,7 @@ export const accounts = [
     phoneNumber: "567-890-1234",
     email: "eve@autodrive.com",
     accountStatus: "Open",
-    creationDate: "2024-01-15",
+    creationDate: "2025-01-15",
     virtualCompany: "Example Company E",
   },
   {
@@ -56,7 +56,7 @@ export const accounts = [
     phoneNumber: "678-901-2345",
     email: "frank@cloudnet.com",
     accountStatus: "Closed",
-    creationDate: "2023-12-20",
+    creationDate: "2024-12-20",
     virtualCompany: "Example Company F",
   },
   {
@@ -66,7 +66,7 @@ export const accounts = [
     phoneNumber: "789-012-3456",
     email: "grace@agrogoods.com",
     accountStatus: "Collections",
-    creationDate: "2023-12-15",
+    creationDate: "2024-12-15",
     virtualCompany: "Example Company G",
   },
   {
@@ -76,7 +76,7 @@ export const accounts = [
     phoneNumber: "890-123-4567",
     email: "henry@cybershield.com",
     accountStatus: "Suspended",
-    creationDate: "2023-11-05",
+    creationDate: "2024-11-05",
     virtualCompany: "Example Company H",
   },
   {
@@ -86,7 +86,7 @@ export const accounts = [
     phoneNumber: "901-234-5678",
     email: "isabella@solartech.com",
     accountStatus: "Open",
-    creationDate: "2023-11-05",
+    creationDate: "2024-11-05",
     virtualCompany: "Example Company I",
   },
   {
@@ -96,7 +96,7 @@ export const accounts = [
     phoneNumber: "012-345-6789",
     email: "jack@quantumai.com",
     accountStatus: "Closed",
-    creationDate: "2023-10-10",
+    creationDate: "2025-01-10",
     virtualCompany: "Example Company J",
   },
 ];
