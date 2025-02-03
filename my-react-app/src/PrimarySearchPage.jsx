@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { accounts } from './data';
-import { FaSortUp, FaSortDown, FaSearch, FaFilter, FaAngleDoubleLeft } from 'react-icons/fa';
+import { FaSortUp, FaSortDown, FaSearch, FaAngleDoubleLeft } from 'react-icons/fa';
 import './PrimarySearchPage.css';
 
 function PrimarySearchPage() {
@@ -76,13 +76,10 @@ function PrimarySearchPage() {
   return (
     <div className="primary-search-container">
       <h1 className="title">Accounts</h1>
-      <button onClick={() => setIsFilterPanelOpen(true)} className="filter-button">
-        <FaFilter /> Filters
+      <button onClick={() => setIsFilterPanelOpen(!isFilterPanelOpen)} className="filter-toggle-button">
+        <FaAngleDoubleLeft className={isFilterPanelOpen ? 'rotate-icon' : ''} />
       </button>
       <div className={`filter-panel ${isFilterPanelOpen ? 'open' : ''}`}>
-        <button onClick={() => setIsFilterPanelOpen(false)} className="close-button">
-          <FaAngleDoubleLeft />
-        </button>
         <h2 className="filter-title">Filters</h2>
         <button onClick={clearFilters} className="clear-filters">Clear All</button>
         <div className="filter-section">
