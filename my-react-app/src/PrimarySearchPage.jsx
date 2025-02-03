@@ -79,7 +79,7 @@ function PrimarySearchPage() {
       <button onClick={() => setIsFilterPanelOpen(!isFilterPanelOpen)} className="filter-toggle-button">
         <FaAngleDoubleLeft className={isFilterPanelOpen ? 'rotate-icon' : ''} />
       </button>
-      <div className={`filter-panel ${isFilterPanelOpen ? 'open' : ''}`}>
+      <div className={`filter-panel ${isFilterPanelOpen ? 'open' : ''}`} style={{ right: isFilterPanelOpen ? '0' : '-100%' }}>
         <h2 className="filter-title">Filters</h2>
         <button onClick={clearFilters} className="clear-filters">Clear All</button>
         <div className="filter-section">
@@ -105,25 +105,35 @@ function PrimarySearchPage() {
       <table className="search-table">
         <thead>
           <tr>
-            {["accountNumber", "companyName", "contactName", "phoneNumber", "email", "accountStatus", "creationDate", "virtualCompany"].map(column => (
+            {['accountNumber', 'companyName', 'contactName', 'phoneNumber', 'email', 'accountStatus', 'creationDate', 'virtualCompany'].map(column => (
               <th key={column} className="sortable-header" onClick={() => requestSort(column)}>
                 <div className="header-content">
-                  <span className="header-text">{column.replace(/([A-Z])/g, " $1").trim()}</span>
+                  <span className="header-text">{column.replace(/([A-Z])/g, ' $1').trim()}</span>
                   {sortConfig.key === column ? (
-                    sortConfig.direction === "ascending" ? <FaSortUp /> : <FaSortDown />
+                    sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />
                   ) : (
                     <FaSortUp className="sort-icon" />
                   )}
                 </div>
-                <div className="search-box-container">
-                  <input 
-                    type="text" 
-                    onChange={handleSearch} 
-                    placeholder="Search" 
-                    className="search-box"
-                  />
-                  <FaSearch className="search-icon" />
-                </div>
+                {column === 'accountStatus' ? (
+                  <select onChange={handleSearch} className="status-dropdown">
+                    <option value="">All</option>
+                    <option value="open">Open</option>
+                    <option value="closed">Closed</option>
+                    <option value="collections">Collections</option>
+                    <option value="suspended">Suspended</option>
+                  </select>
+                ) : (
+                  <div className="search-box-container">
+                    <input 
+                      type="text" 
+                      onChange={handleSearch} 
+                      placeholder="Search" 
+                      className="search-box"
+                    />
+                    <FaSearch className="search-icon" />
+                  </div>
+                )}
               </th>
             ))}
           </tr>
